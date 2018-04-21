@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class CommentRepositoryTest {
     ArticleRepository articleRepository;
 
     @Test
+    @Sql(scripts="classpath:cleanup.sql",executionPhase= Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void TestComment() {
         Article article = new Article();
         article.setId(new Long(1));
@@ -45,21 +47,21 @@ public class CommentRepositoryTest {
         List<Comment> all = commentRepository.findAll();
         Assert.assertEquals(all.size(), 1);
 
-        comment = new Comment();
-        comment.setArticle(article);
-        comment.setDate(LocalDateTime.now());
-        comment.setEmail("test@test.com");
-        comment.setMessage("message");
-        comment.setId(new Long(2));
-        commentRepository.save(comment);
+        Comment comment1 = new Comment();
+        comment1.setArticle(article);
+        comment1.setDate(LocalDateTime.now());
+        comment1.setEmail("test@test.com");
+        comment1.setMessage("message");
+        comment1.setId(new Long(2));
+        commentRepository.save(comment1);
 
-        comment = new Comment();
-        comment.setArticle(article);
-        comment.setDate(LocalDateTime.now());
-        comment.setEmail("test@test.com");
-        comment.setMessage("message");
-        comment.setId(new Long(3));
-        commentRepository.save(comment);
+        Comment comment2 = new Comment();
+        comment2.setArticle(article);
+        comment2.setDate(LocalDateTime.now());
+        comment2.setEmail("test@test.com");
+        comment2.setMessage("message");
+        comment2.setId(new Long(3));
+        commentRepository.save(comment2);
 
         List<Comment> byArticleIdOrderByDate = commentRepository.findByArticleIdOrderByDate(article.getId());
 

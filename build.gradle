@@ -46,8 +46,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('com.fasterxml.jackson.core:jackson-core')
-	testCompile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.liquibase:liquibase-core')
 	runtime('mysql:mysql-connector-java')
-	testCompile('org.springframework.boot:spring-boot-starter-test')	
+
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm
+	compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.9.1.Final'
+
+	testCompile('org.springframework.boot:spring-boot-starter-aop')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

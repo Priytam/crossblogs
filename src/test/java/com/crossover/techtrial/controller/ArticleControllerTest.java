@@ -93,14 +93,14 @@ public class ArticleControllerTest {
 	public void testSearchArticles() throws Exception {
 
 		TestUtil.addArticle(template, "user1@gmail.com", "hello");
-		TestUtil.addArticle(template, "user2@gmail.com", "I  am test");
-		TestUtil.addArticle(template, "user3@gmail.com", "This is test");
+		TestUtil.addArticle(template, "user2@gmail.com", "I am test");
+		TestUtil.addArticle(template, "user3@gmail.com", "Hello is test");
 		TestUtil.addArticle(template, "user4@gmail.com", "hello there");
-		TestUtil.addArticle(template, "user5@gmail.com", "test is bliss");
+		TestUtil.addArticle(template, "user5@gmail.com", "test is bliss help");
 		TestUtil.addArticle(template, "user6@gmail.com", "hello test");
 
 		ResponseEntity<Article[]> forEntity = template.getForEntity("/articles/search?text=hello", Article[].class);
-		Assert.assertEquals(forEntity.getBody().length, 3);
+		Assert.assertEquals(forEntity.getBody().length, 4);
 
 		forEntity = template.getForEntity("/articles/search?text=test", Article[].class);
 		Assert.assertEquals(forEntity.getBody().length, 4);
