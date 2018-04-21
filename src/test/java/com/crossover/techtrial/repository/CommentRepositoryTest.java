@@ -25,11 +25,10 @@ public class CommentRepositoryTest {
     ArticleRepository articleRepository;
 
     @Test
-    @Sql(scripts="classpath:cleanup.sql",executionPhase= Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:cleanup.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void TestComment() {
         Article article = new Article();
         article.setId(new Long(1));
-        article.setDate(LocalDateTime.now());
         article.setContent("content");
         article.setEmail("email@eail.com");
         article.setPublished(true);
@@ -38,7 +37,6 @@ public class CommentRepositoryTest {
 
         Comment comment = new Comment();
         comment.setArticle(article);
-        comment.setDate(LocalDateTime.now());
         comment.setEmail("test@test.com");
         comment.setMessage("message");
         comment.setId(new Long(1));
@@ -49,7 +47,6 @@ public class CommentRepositoryTest {
 
         Comment comment1 = new Comment();
         comment1.setArticle(article);
-        comment1.setDate(LocalDateTime.now());
         comment1.setEmail("test@test.com");
         comment1.setMessage("message");
         comment1.setId(new Long(2));
@@ -57,13 +54,12 @@ public class CommentRepositoryTest {
 
         Comment comment2 = new Comment();
         comment2.setArticle(article);
-        comment2.setDate(LocalDateTime.now());
         comment2.setEmail("test@test.com");
         comment2.setMessage("message");
         comment2.setId(new Long(3));
         commentRepository.save(comment2);
 
-        List<Comment> byArticleIdOrderByDate = commentRepository.findByArticleIdOrderByDate(article.getId());
+        List<Comment> byArticleIdOrderByDate = commentRepository.findByArticleIdOrderByAuditSectionDateCreated(article.getId());
 
         Assert.assertTrue(byArticleIdOrderByDate.get(0).getId().equals(new Long(1)));
         Assert.assertTrue(byArticleIdOrderByDate.get(1).getId().equals(new Long(2)));

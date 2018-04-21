@@ -1,5 +1,6 @@
 package com.crossover.techtrial.controller;
 
+import com.crossover.techtrial.TestUtil;
 import com.crossover.techtrial.model.Article;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,14 +15,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ArticleControllerTest {
+
+	@Before
+	public void setUp() {
+		clean();
+	}
+
+	private void clean() {
+		TestUtil.deleteIndexStore();
+	}
 
 	@Autowired
 	private TestRestTemplate template;
@@ -44,6 +51,8 @@ public class ArticleControllerTest {
 		Assert.assertEquals(body.getTitle(), "title");
 		Assert.assertTrue(body.getPublished());
 		Assert.assertEquals(body.getContent(), "content");
+		Assert.assertNotNull(body.getAuditSection().getDateCreated());
+
 	}
 
 	@Test
@@ -69,11 +78,11 @@ public class ArticleControllerTest {
 		Assert.assertEquals(content, getResult.getBody().getContent());
 
 		LocalDateTime now = LocalDateTime.now();
-		article.setDate(now);
+		//article.setDate(now);
 		template.put("/articles/" + id, article);
 		getResult = TestUtil.getArticle(template, id);
 
-		Assert.assertEquals(now.getYear(), getResult.getBody().getDate().getYear());
+		Assert.assertEquals(now.getYear(), getResult.getBody().getAuditSection().getDateCreated().getYear());
 
 	}
 

@@ -8,7 +8,8 @@
             <column name="email" type="VARCHAR(255)"/>
             <column name="title" type="VARCHAR(255)"/>
             <column name="content" type="LONGTEXT"/>
-            <column name="date" type="datetime"/>
+            <column name="DATE_CREATED" type="datetime"/>
+            <column name="DATE_MODIFIED" type="datetime"/>
             <column name="published" type="BIT"/>
         </createTable>
         <createTable tableName="comment">
@@ -18,7 +19,8 @@
             <column name="article_id" type="BIGINT"/>
             <column name="email" type="VARCHAR(255)"/>
             <column name="message" type="LONGTEXT"/>
-            <column name="date" type="datetime"/>
+            <column name="DATE_CREATED" type="datetime"/>
+            <column name="DATE_MODIFIED" type="datetime"/>
         </createTable>
     </changeSet>
     <changeSet author="java" id="insert_article">

@@ -13,5 +13,5 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, L
 	@Override
 	List<Comment> findAll();
 
-	List<Comment> findByArticleIdOrderByDate(Long articleId);
+	List<Comment> findByArticleIdOrderByAuditSectionDateCreated(Long articleId);
 }

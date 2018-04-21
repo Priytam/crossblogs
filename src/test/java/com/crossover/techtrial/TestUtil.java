@@ -1,4 +1,4 @@
-package com.crossover.techtrial.controller;
+package com.crossover.techtrial;
 
 import com.crossover.techtrial.model.Article;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -7,7 +7,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.io.File;
+
 public class TestUtil {
+
+    public static void deleteIndexStore() {
+        File index = new File("com.crossover.techtrial.model.Article");
+
+        String[]entries = index.list();
+        for(String s: entries){
+            File currentFile = new File(index.getPath(),s);
+            currentFile.delete();
+        }
+    }
 
     public static ResponseEntity<Article> getArticle(TestRestTemplate template, Long id) {
         return template.getForEntity("/articles/" + id, Article.class);

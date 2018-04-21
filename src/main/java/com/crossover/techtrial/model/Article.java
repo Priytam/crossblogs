@@ -3,29 +3,28 @@
  */
 package com.crossover.techtrial.model;
 
+import com.crossover.techtrial.model.audit.AuditListener;
+import com.crossover.techtrial.model.audit.AuditSection;
+import com.crossover.techtrial.model.audit.Auditable;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author crossover
  */
 @Entity
 @Table(name = "article")
+@EntityListeners(value = AuditListener.class)
 @Indexed
 @AnalyzerDef(name = "customanalyzer",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
@@ -36,12 +35,15 @@ import javax.validation.constraints.Size;
                                 @Parameter(name = "language", value = "English")
                         })
         })
-public class Article implements Serializable {
+public class Article implements Serializable, Auditable {
 
     /**
      *
      */
     private static final long serialVersionUID = 5124000706092599751L;
+
+    @Embedded
+	private AuditSection auditSection = new AuditSection();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,9 +62,6 @@ public class Article implements Serializable {
     @Size(min = 0, max = 32768)
     @Column(name = "content")
     String content;
-
-    @Column(name = "date")
-    LocalDateTime date;
 
     @Column(name = "published")
     Boolean published;
@@ -99,20 +98,22 @@ public class Article implements Serializable {
         this.content = content;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
     public Boolean getPublished() {
         return published;
     }
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    @Override
+    public AuditSection getAuditSection() {
+        return auditSection;
+    }
+
+    @Override
+    public void setAuditSection(AuditSection auditSection) {
+        this.auditSection = auditSection;
     }
 
     /*

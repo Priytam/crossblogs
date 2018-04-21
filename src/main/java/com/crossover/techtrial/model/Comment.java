@@ -3,28 +3,28 @@ package com.crossover.techtrial.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.crossover.techtrial.model.audit.AuditListener;
+import com.crossover.techtrial.model.audit.AuditSection;
+import com.crossover.techtrial.model.audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "comment")
-public class Comment implements Serializable {
+@EntityListeners(value = AuditListener.class)
+public class Comment implements Serializable, Auditable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -481073315751589931L;
+
+	@Embedded
+	AuditSection auditSection = new AuditSection();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +43,6 @@ public class Comment implements Serializable {
 	@Size(max = 32768)
 	@Column(name = "message")
 	String message;
-
-	@Column(name = "date")
-	LocalDateTime date;
 
 	public Long getId() {
 		return id;
@@ -79,12 +76,14 @@ public class Comment implements Serializable {
 		this.message = message;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	@Override
+	public AuditSection getAuditSection() {
+		return auditSection;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	@Override
+	public void setAuditSection(AuditSection audit) {
+		this.auditSection = audit;
 	}
 
 	@Override

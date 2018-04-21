@@ -24,7 +24,6 @@ public class ArticleRepositoryTest {
     public void TestArticle() {
         Article article = new Article();
         article.setId(new Long(1));
-        article.setDate(LocalDateTime.now());
         article.setContent("content");
         article.setEmail("email@eail.com");
         article.setPublished(true);
@@ -33,7 +32,6 @@ public class ArticleRepositoryTest {
 
         Article article1 = new Article();
         article1.setId(new Long(2));
-        article1.setDate(LocalDateTime.now());
         article1.setContent("content");
         article1.setEmail("email@eail.com");
         article1.setPublished(true);
@@ -42,7 +40,6 @@ public class ArticleRepositoryTest {
 
         Article article2 = new Article();
         article2.setId(new Long(3));
-        article2.setDate(LocalDateTime.now());
         article2.setContent("content");
         article2.setEmail("email@eail.com");
         article2.setPublished(true);
@@ -51,7 +48,6 @@ public class ArticleRepositoryTest {
 
         Article article3 = new Article();
         article3.setId(new Long(4));
-        article3.setDate(LocalDateTime.now());
         article3.setContent("content");
         article3.setEmail("email@eail.com");
         article3.setPublished(true);

@@ -29,7 +29,6 @@ public class TestCommentService {
 
         Article article = new Article();
         article.setId(new Long(1));
-        article.setDate(LocalDateTime.now());
         article.setContent("content");
         article.setEmail("email@eail.com");
         article.setPublished(true);
@@ -38,7 +37,6 @@ public class TestCommentService {
 
         Comment comment = new Comment();
         comment.setArticle(article);
-        comment.setDate(LocalDateTime.now());
         comment.setEmail("test@test.com");
         comment.setMessage("message");
         comment.setId(new Long(1));

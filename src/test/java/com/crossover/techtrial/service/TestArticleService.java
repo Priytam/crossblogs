@@ -1,6 +1,5 @@
 package com.crossover.techtrial.service;
 
-import com.crossover.techtrial.controller.ArticleControllerTest;
 import com.crossover.techtrial.model.Article;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +24,6 @@ public class TestArticleService {
 
         Article article = new Article();
         article.setId(new Long(1));
-        article.setDate(LocalDateTime.now());
         article.setContent("content");
         article.setEmail("email@eail.com");
         article.setPublished(true);

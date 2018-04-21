@@ -1,5 +1,6 @@
 package com.crossover.techtrial.controller;
 
+import com.crossover.techtrial.TestUtil;
 import com.crossover.techtrial.model.Article;
 import com.crossover.techtrial.model.Comment;
 import org.junit.Assert;
@@ -35,7 +36,7 @@ public class CommentControllerTest {
         Assert.assertEquals(body.getMessage(), "This is comment");
         Assert.assertEquals(body.getEmail(), "comm@gmail.com");
         Assert.assertNull(body.getArticle());
-        Assert.assertNull(body.getDate());
+        Assert.assertNotNull(body.getAuditSection().getDateCreated());
 
     }
 
